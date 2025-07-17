@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const User = require("../models/user");
 // const { StatusCodes } = require('http-status-codes');
 const BadRequestError = require("../errors/custom-errors/bad-request-error");
 
@@ -9,12 +9,13 @@ const register = async (req, res, next) => {
   if (!username || !email || !password) {
     throw new BadRequestError("Username, email, and password are required");
   }
-  await User.deleteOne({email});
+  
   //User model handles the event of Email alreafy in database
   const user = await User.create({ username, email, password });
   const token = await user.createJWT();
 
   res.status(201).json({
+    success: true,
     user: {
       id: user._id,
       username: user.username,
@@ -33,7 +34,7 @@ const login = async (req, res, next) => {
 
   const user = await User.findOne({ email });
   if (!user) {
-    throw new BadRequestError("Invalid credentials. Provide the correct email");
+    throw new BadRequestError("Email does not exist. Provide the correct credentials");
   }
 
   const isPasswordCorrect = await user.comparePassword(password);
@@ -44,12 +45,13 @@ const login = async (req, res, next) => {
   const token = await user.createJWT();
 
   res.status(200).json({
+    success: true,
     user: {
       id: user._id,
       username: user.username,
       email: user.email,
     },
-    token,
+    token
   });
 };
 

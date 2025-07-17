@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
-const { UnauthenticatedError } = require("../errors/custom-errors");
+const { UnauthenticatedError } = require("../errors");
 
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    throw new UnauthenticatedError("Authentication invalid");
+    throw new UnauthenticatedError("Invalid authentication. No authentication token provided");
   }
 
   const token = authHeader.split(" ")[1];
@@ -18,7 +18,7 @@ const authMiddleware = (req, res, next) => {
     };
     next();
   } catch (err) {
-    throw new UnauthenticatedError("Authentication invalid");
+    throw new UnauthenticatedError("Invalid authentication token");
   }
 };
 

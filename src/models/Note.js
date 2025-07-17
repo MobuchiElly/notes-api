@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const noteSchema = new mongoose.Schema({
-  user: {
+  creator: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
@@ -18,6 +18,9 @@ const noteSchema = new mongoose.Schema({
     required: true,
   },
 
-}, { timestamps: true });
+}, { timestamps: {
+  createdAt: "created_at",
+  updatedAt: "updated_at"
+} });
 
 module.exports = mongoose.model('Note', noteSchema);

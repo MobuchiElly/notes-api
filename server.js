@@ -4,31 +4,37 @@ const express = require("express");
 const rateLimit = require("express-rate-limit");
 const cors = require("cors");
 const helmet = require("helmet");
+//const mongoSanitize = require('express-mongo-sanitize');
 const {xss} = require("express-xss-sanitizer");
 const authRouter = require("./src/routes/auth");
 const notesRouter = require("./src/routes/notes");
+const authMiddleware = require("./src/middleware/authMiddleware");
 const errorHandlerMiddleware = require("./src/middleware/error-handler-middleware");
 
 const app = express();
 
 //Middlewares
 app.use(helmet());
-//Rate limiting
-// // Trust the proxy for X-Forwarded-For headers
-// app.set('trust proxy', 1);  // 1 means trusting the first proxy
-// const rateLimiter = rateLimit({
-//   windowMS: 15 * 60 * 1000,
-//   max: 100,
-// });
-// app.use(rateLimiter);
+
+// Rate limiting. Trust the proxy for X-Forwarded-For headers
+app.set('trust proxy', 1);
+const rateLimiter = rateLimit({
+  windowMS: 60 * 60 * 1000,
+  max: 100,
+  message: 'Too many requests from you. Please try again after an hour.',
+  standardHeaders: true,
+  legacyHeaders: false
+});
+app.use(rateLimiter);
 
 app.use(express.json());
+//app.use(mongoSanitize());
 app.use(xss());
 app.use(cors());
 
 //API ROUTES
 app.use("/api/v1/auth", authRouter);
-//app.use("/api/v1/notes", notesRouter);
+app.use("/api/v1/notes", authMiddleware, notesRouter);
 app.use(errorHandlerMiddleware);
 
 

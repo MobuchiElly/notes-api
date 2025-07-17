@@ -5,5 +5,7 @@ const UnauthenticatedError = require('./custom-errors/unauthenticated');
 
 module.exports = {
     CustomError,
-
+    BadRequestError,
+    NotFoundError,
+    UnauthenticatedError
 }
