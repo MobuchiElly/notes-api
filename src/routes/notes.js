@@ -11,33 +11,48 @@ const validateObjectId = require("../middleware/validateObjectId");
 const router = express.Router();
 
 router.route('/')
-  /**
-   * @route   GET /api/notes
-   * @desc    Get all notes
-   * @access  Private
-   */
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: get notes endpoint
+ *     responses:
+ *       201:
+ *         description: Get all user notes
+ */
   .get(getNotes)
 
-  /**
-   * @route   POST /api/notes
-   * @desc    Create a new note
-   * @access  Private
-   */
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Create note
+ *       201:
+ *         description: create new note
+ */
   .post(validateNoteInput, createNote);
 
 router.route('/:id')
-  /**
-   * @route   PUT /api/notes/:id
-   * @desc    Update a note by ID
-   * @access  Private
-   */
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Update note
+ *     responses:
+ *       201:
+ *         description: Update note created by logged in user
+ */
   .put(validateObjectId(), validateNoteInput, updateNote)
 
-  /**
-   * @route   DELETE /api/notes/:id
-   * @desc    Delete a note by ID
-   * @access  Private
-   */
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Delete note
+ *     responses:
+ *       201:
+ *         description: Delete note
+ */
   .delete(validateObjectId(), deleteNote);
 
 module.exports = router;
