@@ -4,8 +4,6 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "node swagger.js && nodemon server.js",
-    "swagger-gen": "node swagger.js",
     "start": "node swagger.js && node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
