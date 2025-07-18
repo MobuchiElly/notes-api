@@ -1,27 +1,33 @@
-const swaggerAutogen = require('swagger-autogen')();
+const swaggerJSDoc = require('swagger-jsdoc');
 
-const doc = {
-  info: {
-    title: 'Notes API',
-    description: 'Notes API documentation with JWT Auth using swagger-autogen',
-    version: '1.0.0',
-  },
-  host: 'localhost:5000',
-  schemes: ['http'],
-  securityDefinitions: {
-    bearerAuth: {
-      type: 'apiKey',
-      name: 'Authorization',
-      in: 'header',
-      description: 'Enter your bearer token in the format: Bearer <token>',
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Notes API',
+      version: '1.0.0',
+      description: 'Notes API documentation with JWT Auth using OpenAPI 3.0',
     },
+    servers: [
+      {
+        url: 'http://localhost:5000',
+      },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'Enter your bearer token in the format: Bearer <token>',
+        },
+      },
+    },
+    security: [{ bearerAuth: [] }],
   },
-  security: [{
-    bearerAuth: [],
-  }],
+  apis: ['./src/routes/*.js'],
 };
 
-const outputFile = './swagger-output.json';
-const endpointsFiles = ['./server.js'];
+const swaggerSpec = swaggerJSDoc(options);
 
-swaggerAutogen(outputFile, endpointsFiles, doc);
+module.exports = swaggerSpec;

@@ -5,7 +5,7 @@ const {rateLimit, ipKeyGenerator} = require("express-rate-limit");
 const cors = require("cors");
 const helmet = require("helmet");
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger-output.json');
+const swaggerSpec = require('./swagger');
 const {xss} = require("express-xss-sanitizer");
 const authRouter = require("./src/routes/auth");
 const notesRouter = require("./src/routes/notes");
@@ -24,7 +24,7 @@ app.use(xss());
 app.use(cors());
 
 //Swagger middleware
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //API ROUTES
 app.use("/api/v1/auth", authRouter);

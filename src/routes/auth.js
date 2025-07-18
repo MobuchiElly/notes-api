@@ -5,25 +5,23 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 /**
  * @swagger
- * /register:
+ * /api/v1/auth/register:
  *   post:
  *     summary: Register a new user
- *     consumes:
- *       - application/json
- *     parameters:
- *       - in: body
- *         name: user
- *         description: User registration data
- *         schema:
- *           type: object
- *           required:
- *             - email
- *             - password
- *           properties:
- *             email:
- *               type: string
- *             password:
- *               type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
  *     responses:
  *       201:
  *         description: User registered successfully
@@ -32,25 +30,23 @@ router.post('/register', authController.register);
 
 /**
  * @swagger
- * /login:
+ * /api/v1/auth//login:
  *   post:
  *     summary: Login a user
- *     consumes:
- *       - application/json
- *     parameters:
- *       - in: body
- *         name: credentials
- *         description: User login credentials
- *         schema:
- *           type: object
- *           required:
- *             - email
- *             - password
- *           properties:
- *             email:
- *               type: string
- *             password:
- *               type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
  *     responses:
  *       200:
  *         description: User logged in successfully
@@ -59,7 +55,7 @@ router.post('/login', authController.login);
 
 /**
  * @swagger
- * /me:
+ * /api/v1/auth/me:
  *   get:
  *     summary: Get the current logged-in user
  *     security:
