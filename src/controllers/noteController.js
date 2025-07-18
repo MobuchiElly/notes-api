@@ -52,7 +52,8 @@ const updateNote = async (req, res) => {
   const updatedNote = await noteService.updateNote(userId, noteId, title, content);
   res.status(200).json({ 
     success: true, 
-    message: "Note updated successfully", data: updatedNote 
+    message: "Note updated successfully", 
+    data: updatedNote 
   });
 };
 

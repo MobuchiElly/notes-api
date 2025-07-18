@@ -52,7 +52,7 @@ app.use("/api/v1/notes", userRateLimiter, notesRouter);
 app.use(errorHandlerMiddleware);
 
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 //connect to database, then start server
 connectDB().then(() => {
   app.listen(PORT, () => {

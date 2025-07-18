@@ -1,3 +1,9 @@
+#  Notes API
+
+ **Quick Links**  
+ [API Documentation (Postman)](https://www.postman.com/your-link-here)  
+ **Base URL**: [https://sippy-task-management-challenge.onrender.com](https://sippy-task-management-challenge.onrender.com)
+
 #  Simple Notes REST API
 
 A secure and scalable RESTful API for managing personal notes. Built with **Node.js**, **Express**, and **MongoDB**, this project demonstrates robust authentication using JWT, CRUD operations, input validation, pagination, Swagger documentation, and optional rate limiting.
