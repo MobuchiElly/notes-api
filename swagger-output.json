@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Notes API",
-    "description": "API documentation with JWT Auth using swagger-autogen",
+    "description": "Notes API documentation with JWT Auth using swagger-autogen",
     "version": "1.0.0"
   },
   "host": "localhost:5000",

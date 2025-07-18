@@ -6,7 +6,6 @@ const cors = require("cors");
 const helmet = require("helmet");
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger-output.json');
-//const mongoSanitize = require('express-mongo-sanitize');
 const {xss} = require("express-xss-sanitizer");
 const authRouter = require("./src/routes/auth");
 const notesRouter = require("./src/routes/notes");
@@ -19,7 +18,6 @@ const app = express();
 app.use(helmet());
 
 app.use(express.json());
-//app.use(mongoSanitize());
 app.use(xss());
 app.use(cors());
 
@@ -33,8 +31,8 @@ app.use(authMiddleware);
 // Rate limiting. Trust the proxy for X-Forwarded-For headers
 app.set('trust proxy', 1);
 const userRateLimiter = rateLimit({
-  windowMS: 60 * 60 * 1000,
-  max: 100,
+  windowMS: process.env.RATE_LIMIT_WINDOW_MS,
+  max: process.env.RATE_LIMIT_MAX,
   keyGenerator: (req, res) => {
     // Use authenticated user's ID if available
     if (req.user && req.user.userId) {
