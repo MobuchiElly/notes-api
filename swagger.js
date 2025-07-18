@@ -6,8 +6,8 @@ const doc = {
     description: 'Notes API documentation with JWT Auth using swagger-autogen',
     version: '1.0.0',
   },
-  host: 'localhost:5000',
-  schemes: ['http'],
+  host: 'notes-api-wbz5.onrender.com',
+  schemes: ['https'],
   securityDefinitions: {
     bearerAuth: {
       type: 'apiKey',
