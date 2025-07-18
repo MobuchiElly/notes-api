@@ -30,7 +30,7 @@ router.post('/register', authController.register);
 
 /**
  * @swagger
- * /api/v1/auth//login:
+ * /api/v1/auth/login:
  *   post:
  *     summary: Login a user
  *     requestBody:
