@@ -11,6 +11,7 @@ const authRouter = require("./src/routes/auth");
 const notesRouter = require("./src/routes/notes");
 const authMiddleware = require("./src/middleware/authMiddleware");
 const errorHandlerMiddleware = require("./src/middleware/error-handler-middleware");
+const NotFound = require("./src/middleware/NotFound");
 
 const app = express();
 
@@ -18,6 +19,7 @@ const app = express();
 app.use(helmet());
 
 app.use(express.json());
+app.use(express.static("./public"));
 app.use(xss());
 app.use(cors());
 
@@ -26,7 +28,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //API ROUTES
 app.use("/api/v1/auth", authRouter);
-app.use(authMiddleware);
 
 // Rate limiting. Trust the proxy for X-Forwarded-For headers
 app.set('trust proxy', 1);
@@ -48,9 +49,9 @@ const userRateLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-app.use("/api/v1/notes", userRateLimiter, notesRouter);
+app.use("/api/v1/notes", authMiddleware, userRateLimiter, notesRouter);
 app.use(errorHandlerMiddleware);
-
+app.use(NotFound);
 
 const PORT = process.env.PORT || 5000;
 //connect to database, then start server

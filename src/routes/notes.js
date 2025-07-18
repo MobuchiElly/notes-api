@@ -25,7 +25,7 @@ router.route('/')
 /**
  * @swagger
  * /:
- *   get:
+ *   post:
  *     summary: Create note
  *       201:
  *         description: create new note
@@ -33,10 +33,11 @@ router.route('/')
   .post(validateNoteInput, createNote);
 
 router.route('/:id')
+
 /**
  * @swagger
  * /:
- *   get:
+ *   put:
  *     summary: Update note
  *     responses:
  *       201:
@@ -47,7 +48,7 @@ router.route('/:id')
 /**
  * @swagger
  * /:
- *   get:
+ *   delete:
  *     summary: Delete note
  *     responses:
  *       201:

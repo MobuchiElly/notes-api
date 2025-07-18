@@ -3,44 +3,70 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const authMiddleware = require('../middleware/authMiddleware');
 
-// #swagger.tags = ['Auth']
-// #swagger.description = 'Register a new user'
-// #swagger.parameters['body'] = {
-//   in: 'body',
-//   description: 'User registration payload',
-//   required: true,
-//   schema: {
-//     $email: 'user@example.com',
-//     $password: 'password123',
-//     name: 'John Doe'
-//   }
-// }
-// #swagger.responses[201] = {
-//   description: 'User successfully registered'
-// }
-
+/**
+ * @swagger
+ * /register:
+ *   post:
+ *     summary: Register a new user
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: user
+ *         description: User registration data
+ *         schema:
+ *           type: object
+ *           required:
+ *             - email
+ *             - password
+ *           properties:
+ *             email:
+ *               type: string
+ *             password:
+ *               type: string
+ *     responses:
+ *       201:
+ *         description: User registered successfully
+ */
 router.post('/register', authController.register);
-
 
 /**
  * @swagger
- * /:
- *   get:
- *     summary: Login endpoint
+ * /login:
+ *   post:
+ *     summary: Login a user
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: credentials
+ *         description: User login credentials
+ *         schema:
+ *           type: object
+ *           required:
+ *             - email
+ *             - password
+ *           properties:
+ *             email:
+ *               type: string
+ *             password:
+ *               type: string
  *     responses:
  *       200:
- *         description: Login
+ *         description: User logged in successfully
  */
 router.post('/login', authController.login);
 
 /**
  * @swagger
- * /:
+ * /me:
  *   get:
- *     summary: User endpoint
+ *     summary: Get the current logged-in user
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Get logged-in user details
+ *         description: Current user retrieved successfully
  */
 router.get('/me', authMiddleware, authController.getCurrentUser);
 
